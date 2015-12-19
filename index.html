@@ -145,6 +145,11 @@
             annyang.addCallback('error', function () {
                 communicateAction('error');
             });
+            annyang.addCallback('resultMatch', function (userInput, cmdText, tString) {
+                console.log(userInput);
+                console.log(cmdText); 
+                console.log(tString); 
+            });
         })();
     </script>
 </body>
