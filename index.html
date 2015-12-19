@@ -8,7 +8,6 @@
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
     <title>Have You Heard Of...?</title>
-    <!--  -->
     <style>
         h1,
         h3 {
@@ -59,7 +58,7 @@
     <script>
         (function () {
             var audio = new Audio();
-
+            // SEARCHING IS FUNDAMENTAL TO FINDING ANYTHING
             function searchTracks(query) {
                 $.ajax({
                     url: 'https://api.spotify.com/v1/search',
@@ -106,7 +105,7 @@
             }
 
             if (annyang) {
-                // Let's define our first command. First the text we expect, and then the function it should call
+                // ANNYANG COMMANDS
                 var commands = {
                     'stop': function () {
                         audio.pause();
@@ -130,19 +129,19 @@
 
                     ':nomatch': function (message) {
                         recognized(message);
-                        communicateAction('Sorry, I don\'t understand this action. Please Try again.');
+                        communicateAction('I couldn/t understand that. Please try again!');
                     }
                 };
 
                 // Add commands to annyang
                 annyang.addCommands(commands);
 
-                // Start listening. You can call this here, or attach this call to an event, button, etc.
+                // SUBROUTINE TO START ANNYANG IN A BUTTON
                 $('.btn').click(function () {
-                    annyang.start();
+                    makeListen();
                 });
             }
-
+            // DASTARDLY ERROR MESSAGE; NEED TO ADD MORE DEBUGGING FEATURES HERE.
             annyang.addCallback('error', function () {
                 communicateAction('error');
             });
