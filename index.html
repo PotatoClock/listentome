@@ -8,7 +8,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
     <title>Have You Heard Of...?</title>
-    <!--  -->
+    <!-- local css styles (styling on you) -->
     <style>
         h1,
         h3 {
@@ -48,7 +48,7 @@
                 <h3> Click Below To Begin!</h3>
                 <button type="button" class="btn btn-primary">Listen To Me</button>
             </div>
-            <div id="conversation"></div>
+            <div id="output"></div>
         </div>
     </main>
     <footer>Powered by Spotify Web API and the library <a href="https://github.com/TalAter/annyang">annyang</a>.</footer>
@@ -71,7 +71,7 @@
                         if (response.tracks.items.length) {
                             var track = response.tracks.items[0];
                             if (track.is_playable) {
-                                communicateAction('<div>This track is not playable from your current location. Try another Track!</div>');
+                                communicateAction('<div>This track is not playable from your current location. Try another track!</div>');
                             } else {
                                 audio.src = track.preview_url;
                                 audio.play();
@@ -92,12 +92,12 @@
             }
 
             function communicateAction(text) {
-                var rec = document.getElementById('conversation');
+                var rec = document.getElementById('output');
                 rec.innerHTML += '<div class="action now-playing text-center">' + text + '</div>';
             }
 
             function recognized(text) {
-                var rec = document.getElementById('conversation');
+                var rec = document.getElementById('output');
                 rec.innerHTML += '<div class="recognized text-center now-playing"><div>' + text + '</div></div>';
             }
 
@@ -130,7 +130,7 @@
 
                     ':nomatch': function (message) {
                         recognized(message);
-                        communicateAction('Sorry, I don\'t understand this action. Please Try again.');
+                        communicateAction('Sorry, I don\'t understand you. Please Try again.');
                     }
                 };
 
