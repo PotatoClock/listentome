@@ -58,7 +58,7 @@
     <script>
         (function () {
             var audio = new Audio();
-            // SEARCHING IS FUNDAMENTAL TO FINDING ANYTHING
+            // SEARCH QUERY
             function searchTracks(query) {
                 $.ajax({
                     url: 'https://api.spotify.com/v1/search',
@@ -70,11 +70,12 @@
                         if (response.tracks.items.length) {
                             var track = response.tracks.items[0];
                             if (track.is_playable) {
-                                communicateAction('<div>This track is not playable from your current location. Try another Track!</div>');
+                                communicateAction('<div>Unfortunately, this track is not playable from your current location :( Please try another Track!</div>');
                             } else {
+                                $( ".now-playing" ).remove();
+                                communicateAction('<div class="text-center now-playing"> Now Playing ' + track.name + ' by ' + track.artists[0].name + '</div><img width="150" src="' + track.album.images[1].url + '">');
                                 audio.src = track.preview_url;
                                 audio.play();
-                                communicateAction('<div class="text-center now-playing"> Now Playing ' + track.name + ' by ' + track.artists[0].name + '</div><img width="150" src="' + track.album.images[1].url + '">');
                             }
                         }
                     }
