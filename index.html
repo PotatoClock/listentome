@@ -6,29 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 
     <title>Have You Heard Of...?</title>
-    <style>
-        h1,
-        h3 {
-            font-family: Lobster, arial;
-        }
-        
-        button {
-            font-family: Lobster, arial;
-        }
-        
-        .now-playing {
-            font-family: Lobster, arial;
-        }
-        
-        footer {
-            background-color: dimgrey;
-            width: 100%;
-            bottom: 0;
-            position: fixed;
-        }
-    </style>
 
 </head>
 
@@ -37,121 +17,29 @@
         <div>
             <div id="commands">
                 <h1 class="text-center text-primary">Got a song you wanna show to someone quickly? Here you go!</h2>
-                <h3 class="text-center">Voice Commands:</h3>
+                    <h3 class="text-center">Voice Commands:</h3>
                     <li class="text-center">"Play [song name]"</li>
                     <li class="text-center">"Play [song name] by [artist name]"</li>
                     <li class="text-center">"Stop" to pause the current playing preview track</li>
             </div>
-            
+
             <div class="text-center">
                 <h3> Click Below To Begin!</h3>
-                <button type="button" class="btn btn-primary">Listen To Me</button>
+                <button type="button" class="btn btn-primary" id="startBTN">Listen To Me</button>
             </div>
             <div id="conversation"></div>
         </div>
     </main>
-    <footer>Powered by Spotify Web API and the library <a href="https://github.com/TalAter/annyang">annyang</a>.</footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.0.0/annyang.min.js"></script>
+    <footer>Powered by Spotify Web API and the library
+        <a href="https://github.com/TalAter/annyang ">annyang</a>.</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js "></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.0.0/annyang.min.js "></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js "></script>
+    <script src="js/script.js "></script>
     <script>
-        (function () {
-            var audio = new Audio();
-            // SEARCH QUERY
-            function searchTracks(query) {
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: query,
-                        type: 'track'
-                    },
-                    success: function (response) {
-                        if (response.tracks.items.length) {
-                            var track = response.tracks.items[0];
-                            if (track.is_playable) {
-                                communicateAction('<div>Unfortunately, this track is not playable from your current location :( Please try another Track!</div>');
-                            } else {
-                                $( ".now-playing" ).remove();
-                                communicateAction('<div class="text-center now-playing"> Now Playing ' + track.name + ' by ' + track.artists[0].name + '</div><img width="150" src="' + track.album.images[1].url + '">');
-                                audio.src = track.preview_url;
-                                audio.play();
-                            }
-                        }
-                    }
-                });
-            }
+        initialRun();
 
-            function playSong(songName, artistName) {
-                var query = songName;
-                if (artistName) {
-                    query += ' artist:' + artistName;
-                }
-
-                searchTracks(query);
-            }
-
-            function communicateAction(text) {
-                var rec = document.getElementById('conversation');
-                rec.innerHTML += '<div class="action now-playing text-center">' + text + '</div>';
-            }
-
-            function recognized(text) {
-                var rec = document.getElementById('conversation');
-                rec.innerHTML += '<div class="recognized text-center now-playing"><div>' + text + '</div></div>';
-            }
-
-            function makeListen() {
-                annyang.start();
-            }
-
-            if (annyang) {
-                // ANNYANG COMMANDS
-                var commands = {
-                    'stop': function () {
-                        audio.pause();
-                    },
-                    'play track *song': function (song) {
-                        recognized('Play track ' + song);
-                        playSong(song);
-                    },
-                    'play *song by *artist': function (song, artist) {
-                        recognized('Play song ' + song + ' by ' + artist);
-                        playSong(song, artist);
-                    },
-                    'play song *song': function (song) {
-                        recognized('Play song ' + song);
-                        playSong(song);
-                    },
-                    'play *song': function (song) {
-                        recognized('Play ' + song);
-                        playSong(song);
-                    },
-
-                    ':nomatch': function (message) {
-                        recognized(message);
-                        communicateAction('I couldn/t understand that. Please try again!');
-                    }
-                };
-
-                // Add commands to annyang
-                annyang.addCommands(commands);
-
-                // SUBROUTINE TO START ANNYANG IN A BUTTON
-                $('.btn').click(function () {
-                    makeListen();
-                });
-            }
-            // DASTARDLY ERROR MESSAGE; NEED TO ADD MORE DEBUGGING FEATURES HERE.
-            annyang.addCallback('error', function () {
-                communicateAction('error');
-            });
-            annyang.addCallback('resultMatch', function (userInput, cmdText, tString) {
-                console.log(userInput);
-                console.log(cmdText); 
-                console.log(tString); 
-            });
-        })();
     </script>
 </body>
 

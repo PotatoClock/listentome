@@ -1,0 +1,28 @@
+{
+  "name": "listentome",
+  "version": "1.0.0",
+  "description": "voice recognition song previewer using spotify REST API",
+  "main": "index.html",
+  "scripts": {
+    "test": "run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PotatoClock/listentome.git"
+  },
+  "keywords": [
+    "spotify",
+    "api",
+    "annyang",
+    "voice",
+    "recognition",
+    "listentome",
+    "listen"
+  ],
+  "author": "PotatoClock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PotatoClock/listentome/issues"
+  },
+  "homepage": "https://github.com/PotatoClock/listentome#readme"
+}

@@ -1,0 +1,19 @@
+h1,
+h3 {
+    font-family: Lobster, arial;
+}
+
+button {
+    font-family: Lobster, arial;
+}
+
+.now-playing {
+    font-family: Lobster, arial;
+}
+
+footer {
+    background-color: dimgrey;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+}
